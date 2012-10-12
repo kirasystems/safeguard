@@ -6,8 +6,8 @@
   "Return a validation function from a set of rules."
 	[& rules]
   (fn [m]
-	  (loop [m       m
-	         rules   (seq rules)]
+	  (loop [m     m
+	         rules (seq rules)]
 	    (if-not rules
 		    (dissoc m ::on-failure)
 	      (if-let [result ((first rules) m)]

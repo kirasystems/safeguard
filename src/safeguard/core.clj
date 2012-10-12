@@ -7,13 +7,13 @@ all rules pass. The result of the first failure is returned."
 	[ & validation-fns]
 	(fn [request]
 		(loop [req  request
-			     sfns (seq validation-fns)]
-			(if-not sfns
-				request
-				(let [result ((first sfns) req)]
+			     vfns (seq validation-fns)]
+			(if-not vfns
+				req
+				(let [result ((first vfns) req)]
 					(if (response? result)
 						result
-						(recur result (next sfns))))))))
+						(recur result (next vfns))))))))
 
 (defn wrap-policy
   "Wrap a handler in a policy."
