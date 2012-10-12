@@ -51,14 +51,3 @@
 				(validation-fn request)
 				{::perrors (conj (::perrors request) error-msg)}))))
 
-(defn to
-	[param-key transformation-fn]
-	(fn [request]
-	  (update-in request [:params param-key] transformation-fn)))
-
-(defn declare-safe-params
-  "Copy a collection of ring ':params' keys to a map under the key :safe-params."
-	[& param-keys]
-  (fn [request]
-    (assert (empty? (select-keys (:safe-params request) param-keys)))
-	  {:safe-params (merge (:safe-params request) (select-keys (:params request) param-keys))}))
