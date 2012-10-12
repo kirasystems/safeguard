@@ -56,10 +56,9 @@
 	(fn [request]
 	  (update-in request [:params param-key] transformation-fn)))
 
-(defn declare-safe
+(defn declare-safe-params
+  "Copy a collection of ring ':params' keys to a map under the key :safe-params."
 	[& param-keys]
   (fn [request]
     (assert (empty? (select-keys (:safe-params request) param-keys)))
-	  (update-in request [:safe-params] merge (select-keys (:params request) param-keys))))
-
-#_((validation-fn (must :id #(> % 5))) {:id 10})
+	  {:safe-params (merge (:safe-params request) (select-keys (:params request) param-keys))}))

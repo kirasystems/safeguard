@@ -17,3 +17,10 @@
 	(testing "Testing general must."
 		(is (= ((v/must #(= (:a %) 1)) {:a 1}) {}))
 		(is (nil? ((v/must #(= (:a %) 1)) {:a 0})))))
+
+
+(deftest test-declare-safe-params
+	(testing "Testing basic declare-safe-params."
+  	(is (=
+		      ((v/declare-safe-params :a :b) {:params {:a 1 :b 2 :c 3}})
+		      {:safe-params {:a 1 :b 2}}))))
