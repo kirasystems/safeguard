@@ -1,6 +1,7 @@
 (ns safeguard.validate
 	(:use clojure.stacktrace))
 
+(def pass {})
 
 (defn validation-fn
   "Return a validation function from a set of rules."
@@ -43,7 +44,7 @@
 	([param-key validation-fn error-msg]
 		(fn [request]
 			(if (validation-fn (get (:params request) param-key))
-				{}
+				pass
 				{::errors (update-in (::errors request) [param-key] conj error-msg)})))
 	([validation-fn error-msg]
 		(fn [request]
@@ -51,3 +52,7 @@
 				(validation-fn request)
 				{::perrors (conj (::perrors request) error-msg)}))))
 
+(defn exist
+	"Verify that a parameter exists."
+	[v]
+	(if-not (nil? v) pass))

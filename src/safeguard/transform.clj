@@ -10,8 +10,9 @@
 (defn to
   "Modify a map value."
 	[param-key transformation-fn]
-	(fn [request]
-		(update-in request [:params param-key] transformation-fn)))
+	(let [pkey (if (vector? param-key) param-key [param-key])]
+		(fn [data]
+			(update-in data pkey transformation-fn))))
 
 (defn declare-safe-params
 	"Copy a collection of ring ':params' keys to a map under the key :safe-params."
