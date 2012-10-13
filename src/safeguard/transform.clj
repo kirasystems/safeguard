@@ -7,6 +7,11 @@
 		(Integer. v)
 		(catch Exception e 0)))
 
+(defn bool
+	"Parse a boolean."
+	[s]
+	(= "true" s))
+
 (defn to
   "Modify a map value."
 	[param-key transformation-fn]
